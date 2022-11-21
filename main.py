@@ -21,8 +21,7 @@ with open('data.html', 'r') as f:
 
     if _len != last_len:
         with open('last.txt', 'w') as f1:
-            # sent_mail()
+            send_mail.send_mail()
             print(_len, file=f1)
-    # for i in body.findall('section'):
-    #     print(i.id)
+   
     
