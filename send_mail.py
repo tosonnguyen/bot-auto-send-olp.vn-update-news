@@ -4,14 +4,17 @@ import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-load_dotenv()
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+load_dotenv(dir_path + '/.env')
+dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
 sent_from = gmail_user
 # sent_to = ['buikhanhduy_t65@hus.edu.vn', 'sao2162002gmail.com']
 # print(sent_to)
 def send_mail():
-    with open('mail_list.txt', 'r') as f:
+    with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
     sent_subject = "[UPDATE] OLP.VN vừa có tin tức mới"
     # with codecs.open('template.html', 'r', encoding='utf-8', errors='ignore') as f:

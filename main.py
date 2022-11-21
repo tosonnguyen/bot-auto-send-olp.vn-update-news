@@ -1,13 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
 import send_mail
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
 url = 'https://www.olp.vn/tin-tức/olympic-icpc/thông-báo'
 request = requests.get(url, headers=headers)
-with open('data.html', 'w') as f:
+dir_path += '/'
+with open(dir_path+'data.html', 'w') as f:
     print(request.text, file=f)
 
-with open('data.html', 'r') as f:
+print(dir_path)
+with open(dir_path+'data.html', 'r') as f:
     soup = BeautifulSoup(f, 'html5lib')
     # print(soup.prettify())
     # soup.find()
@@ -15,12 +19,12 @@ with open('data.html', 'r') as f:
     body = soup.find('div', attrs={'role': 'main'})
     # print(body.section)
     _len = len(body.contents)
-    with open('last.txt', 'r') as f1:
+    with open(dir_path+'last.txt', 'r') as f1:
         last_len = int(f1.read())
         print(last_len)
 
     if _len != last_len:
-        with open('last.txt', 'w') as f1:
+        with open(dir_path+'last.txt', 'w') as f1:
             send_mail.send_mail()
             print(_len, file=f1)
    
