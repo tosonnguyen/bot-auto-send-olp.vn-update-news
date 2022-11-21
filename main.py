@@ -2,30 +2,27 @@ from bs4 import BeautifulSoup
 import requests
 import send_mail
 import os 
+import hashlib
 dir_path = os.path.dirname(os.path.realpath(__file__))
 headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
 url = 'https://www.olp.vn/tin-tức/olympic-icpc/thông-báo'
-request = requests.get(url, headers=headers)
 dir_path += '/'
-with open(dir_path+'data.html', 'w') as f:
-    print(request.text, file=f)
 
-print(dir_path)
-with open(dir_path+'data.html', 'r') as f:
-    soup = BeautifulSoup(f, 'html5lib')
-    # print(soup.prettify())
-    # soup.find()
-    # print(soup.div.div.div)
-    body = soup.find('div', attrs={'role': 'main'})
-    # print(body.section)
-    _len = len(body.contents)
-    with open(dir_path+'last.txt', 'r') as f1:
-        last_len = int(f1.read())
-        print(last_len)
+request = requests.get(url, headers=headers)
 
-    if _len != last_len:
-        with open(dir_path+'last.txt', 'w') as f1:
-            send_mail.send_mail()
-            print(_len, file=f1)
+soup = BeautifulSoup(request.text, 'html5lib')
+body = soup.find('div', attrs={'role': 'main'})
+contents_text = ' '.join([item.get_text() for item in body.contents])
+currentHash = hashlib.sha224(contents_text.encode('utf8')).hexdigest()
+
+with open(dir_path+'last.txt', 'r') as f1:
+    last_hash = f1.readline().strip()
+    print(last_hash)
+
+if currentHash != last_hash:
+    print(currentHash, last_hash)
+    with open(dir_path+'last.txt', 'w') as f1:
+        send_mail.send_mail()
+        print(currentHash, file=f1)
    
     

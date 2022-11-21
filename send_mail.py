@@ -11,13 +11,10 @@ dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
 sent_from = gmail_user
-# sent_to = ['buikhanhduy_t65@hus.edu.vn', 'sao2162002gmail.com']
-# print(sent_to)
 def send_mail():
     with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
     sent_subject = "[UPDATE] OLP.VN vừa có tin tức mới"
-    # with codecs.open('template.html', 'r', encoding='utf-8', errors='ignore') as f:
     sent_body = """\
     OLP.vn vừa cập nhật tin tức mới.
     https://www.olp.vn/tin-tức/olympic-icpc/thông-báo
@@ -40,14 +37,9 @@ def send_mail():
     msg['To'] = ", ".join(sent_to)
     msg.attach(msg_text)
     msg.preamble = sent_body
-    # email_text = """\
-    # From: %s
-    # Subject: %s
-    # %s
-    # """ % (sent_from, sent_subject, sent_body)
+
 
     print(email_text)
-    # print(msg.as_string())
     try:
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
         server.ehlo()
