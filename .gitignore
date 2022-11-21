@@ -3,3 +3,4 @@ mail_list.txt
 data.html
 .env
 venv
+__pycache__
