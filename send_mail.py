@@ -11,9 +11,12 @@ dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
 sent_from = gmail_user
+bcc = ['buikhanhduy_t65@hus.edu.vn', 'nguyendoansy_t65@hus.edu.vn']
 def send_mail():
     with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
+    with open(dir_path+'bcc_list', 'r') as f:
+        bcc = [line.strip() for line in f.readlines()]
     sent_subject = "[UPDATE] OLP.VN vừa có tin tức mới"
     sent_body = """\
     OLP.vn vừa cập nhật tin tức mới.
@@ -44,7 +47,7 @@ def send_mail():
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
         server.ehlo()
         server.login(gmail_user, gmail_app_password)
-        server.sendmail(sent_from, sent_to, msg.as_string().encode('utf8'))
+        server.sendmail(sent_from, sent_to + bcc, msg.as_string().encode('utf8'))
         server.close()
 
         print('Email sent!')
