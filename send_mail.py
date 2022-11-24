@@ -14,7 +14,7 @@ sent_from = gmail_user
 def send_mail():
     with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
-    with open(dir_path+'bcc_list', 'r') as f:
+    with open(dir_path+'bcc_list.txt', 'r') as f:
         bcc = [line.strip() for line in f.readlines()]
     sent_subject = "[UPDATE] OLP.VN vừa có tin tức mới"
     sent_body = """\
