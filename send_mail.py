@@ -11,7 +11,6 @@ dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
 sent_from = gmail_user
-bcc = ['buikhanhduy_t65@hus.edu.vn', 'nguyendoansy_t65@hus.edu.vn']
 def send_mail():
     with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
