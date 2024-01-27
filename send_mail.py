@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import time
+from datetime import datetime 
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -11,17 +13,23 @@ dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
 sent_from = gmail_user
+
 def send_mail():
     with open(dir_path+'mail_list.txt', 'r') as f:
         sent_to = [line.strip() for line in f.readlines()]
     with open(dir_path+'bcc_list.txt', 'r') as f:
         bcc = [line.strip() for line in f.readlines()]
-    sent_subject = "[UPDATE] OLP.VN vừa có tin tức mới"
+
+    #localtime = time.asctime(time.localtime(time.time()))
+    localtime = datetime.now()
+    localtime = localtime.strftime("%H:%M:%S, %d/%m/%Y") 
+
+    sent_subject = "[ OLP.VN ] Vừa có tin tức mới lúc " + localtime
     sent_body = """\
-    OLP.vn vừa cập nhật tin tức mới.
+    OLP.VN vừa cập nhật tin tức mới.
     https://www.olp.vn/tin-tức/olympic-icpc/thông-báo
 
-    From small bot with luv! \u2764\ufe0f
+    From small bot with To Son Nguyen \u2764\ufe0f
     """
 
     email_text = """\
