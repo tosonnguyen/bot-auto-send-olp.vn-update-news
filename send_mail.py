@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-load_dotenv(dir_path + '/.env')
+load_dotenv(dir_path + '/caidatguithu.env')
 dir_path += '/'
 gmail_user = os.getenv('GMAIL_USER')
 gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
